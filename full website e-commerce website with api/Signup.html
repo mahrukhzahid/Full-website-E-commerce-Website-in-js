@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup Form</title>
+  <!-- Include SweetAlert library -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+  
+    <div class="container">
+    <h2>Signup</h2>
+    <form id="signupForm">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+      <label for="confirmPassword">Confirm Password</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+
+      <button type="submit">Sign Up</button>
+    </form>
+  </div>
+<style>
+    * {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f2f2f2;
+}
+
+.container {
+  width: 90%;
+  max-width: 400px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+label {
+  font-size: 1rem;
+  margin-top: 10px;
+  color: #333;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+</style>
+  <script >
+document.getElementById("signupForm").addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  const confirmPassword = document.getElementById("confirmPassword").value;
+
+  // Password validation
+  if (password !== confirmPassword) {
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Passwords do not match!"
+    });
+    return;
+  }
+
+  // Check if user already exists
+  if (localStorage.getItem(email)) {
+    Swal.fire({
+      icon: "warning",
+      title: "Warning",
+      text: "User already exists!"
+    });
+    return;
+  }
+
+  // Save new user to localStorage
+  const newUser = {
+    name: name,
+    email: email,
+    password: password
+  };
+  localStorage.setItem(email, JSON.stringify(newUser));
+
+  Swal.fire({
+    icon: "success",
+    title: "Success",
+    text: "Signup successful!"
+  }).then(() => {
+    // Optional: Clear form after successful signup
+    document.getElementById("signupForm").reset();
+  });
+});
+
+  </script>
+</body>
+</html>
+
